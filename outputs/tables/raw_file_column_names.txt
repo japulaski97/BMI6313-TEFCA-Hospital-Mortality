@@ -1,0 +1,19 @@
+
+
+=============================
+FILE: Complications_and_Deaths-Hospital.csv 
+=============================
+ [1] "Facility ID"          "Facility Name"        "Address"             
+ [4] "City/Town"            "State"                "ZIP Code"            
+ [7] "County/Parish"        "Telephone Number"     "Measure ID"          
+[10] "Measure Name"         "Compared to National" "Denominator"         
+[13] "Score"                "Lower Estimate"       "Higher Estimate"     
+[16] "Footnote"             "Start Date"           "End Date"            
+
+
+=============================
+FILE: hospital-TEFCA-Network-participation.csv 
+=============================
+[1] "aha_id"           "mstate"           "mcrnum"           "year"            
+[5] "national_network" "vendor_network"   "hio"              "tefca_part"      
+[9] "tefca_plan"      

@@ -1,0 +1,7 @@
+Predictor,Estimate,SE,95% CI,p-value
+Current TEFCA vs planned TEFCA,0.108,0.055,"[0.001, 0.216]",0.047
+Neither current nor planned vs planned TEFCA,0.08,0.05,"[-0.018, 0.179]",0.11
+National network participation,-0.026,0.042,"[-0.108, 0.057]",0.544
+EHR vendor-network participation,-0.186,0.045,"[-0.274, -0.099]",<0.001
+State/regional/local HIO participation,-0.026,0.051,"[-0.126, 0.073]",0.603
+Log CMS denominator,-0.075,0.015,"[-0.103, -0.046]",<0.001

@@ -1,0 +1,6 @@
+step,n
+ONC rows after excluding missing facility IDs,804
+ONC unique hospitals,804
+CMS Hybrid HWM rows with nonmissing score,3976
+Primary merged Hybrid HWM analytic rows,691
+Secondary merged mortality analytic rows,1154

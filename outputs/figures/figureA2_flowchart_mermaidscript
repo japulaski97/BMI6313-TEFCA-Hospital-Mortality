@@ -1,0 +1,14 @@
+flowchart TD
+    A[Download ONC hospital network-participation dataset] --> B[Filter to selected 2023-2024 ONC observations]
+    B --> C[Standardize ONC Medicare certification numbers]
+
+    D[Download CMS Complications and Deaths - Hospital dataset] --> E[Select Hybrid HWM primary outcome<br/>July 2023-June 2024 reporting window]
+    D --> F[Select HF and pneumonia mortality outcomes<br/>July 2021-June 2024 reporting windows]
+    E --> G[Standardize CMS Facility IDs]
+    F --> G
+
+    C --> H[Merge ONC and CMS hospital rows]
+    G --> H
+    H --> I[Code TEFCA status and other network variables]
+    I --> J[Exclude hospitals with missing identifiers or outcome values]
+    J --> K[Fit adjusted hospital-level linear regression models]

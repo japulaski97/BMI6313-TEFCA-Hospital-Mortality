@@ -1,0 +1,3 @@
+measure_id,measure_name,Planned TEFCA,Current TEFCA,Neither current nor planned
+MORT_30_HF,Death rate for heart failure patients,252,90,182
+MORT_30_PN,Death rate for pneumonia patients,277,106,247
