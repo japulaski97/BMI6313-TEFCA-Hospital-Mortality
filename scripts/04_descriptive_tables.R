@@ -21,6 +21,23 @@ primary_hybrid_hwm <- read_csv(
     )
   )
 
+# Hybrid HWM score summary for Results text
+hybrid_hwm_score_summary <- primary_hybrid_hwm %>%
+  summarise(
+    min_score = min(score, na.rm = TRUE),
+    max_score = max(score, na.rm = TRUE),
+    mean_score = mean(score, na.rm = TRUE),
+    sd_score = sd(score, na.rm = TRUE)
+  )
+
+write_csv(
+  hybrid_hwm_score_summary,
+  here("outputs", "tables", "hybrid_hwm_score_summary.csv")
+)
+
+cat("\nHybrid HWM score summary:\n")
+print(hybrid_hwm_score_summary)
+
 secondary_mortality <- read_csv(
   here("data_processed", "secondary_mortality.csv"),
   show_col_types = FALSE
