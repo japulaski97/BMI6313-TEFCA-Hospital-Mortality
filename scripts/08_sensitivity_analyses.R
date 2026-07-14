@@ -103,7 +103,7 @@ wls_model <- lm(
   weights = denominator
 )
 
-# 4. Current-vs-planned-only model: exclude neither-current-nor-planned hospitals
+# 4. Current-and-planned-only model: exclude neither-current-nor-planned hospitals
 current_planned_only_model <- lm(
   score ~ tefca_status +
     national_network +
@@ -122,7 +122,7 @@ sensitivity_results <- bind_rows(
   extract_current_vs_planned(main_model, "Main OLS model"),
   extract_current_vs_planned(model_2024, "2024-only model"),
   extract_current_vs_planned(wls_model, "Weighted least squares model"),
-  extract_current_vs_planned(current_planned_only_model, "Current-vs-planned-only model")
+  extract_current_vs_planned(current_planned_only_model, "Current-and-planned-only model")
 ) %>%
   mutate(
     model_name = factor(
@@ -131,7 +131,7 @@ sensitivity_results <- bind_rows(
         "Main OLS model",
         "2024-only model",
         "Weighted least squares model",
-        "Current-vs-planned-only model"
+        "Current-and-planned-only model"
       ))
     )
   )
@@ -176,7 +176,7 @@ tableA4_gt <- tableA4_sensitivity %>%
     subtitle = "Sensitivity Analyses for the Current TEFCA Versus Planned TEFCA Estimate"
   ) %>%
   tab_source_note(
-    source_note = "The estimate shown is the adjusted coefficient for current TEFCA participation relative to planned-but-not-current TEFCA participation. The 2024-only model omitted year fixed effects because only one ONC survey year was included."
+    source_note = "The estimate shown is the adjusted coefficient for current TEFCA participation relative to planned TEFCA participation. The 2024-only model omitted year fixed effects because only one ONC survey year was included."
   )
 
 gtsave(
