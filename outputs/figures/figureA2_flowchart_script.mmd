@@ -1,0 +1,36 @@
+---
+config:
+  theme: base
+  flowchart:
+    curve: basis
+---
+flowchart TD
+    A["ONC source file<br/>2022-2025: 3,393 records"] --> B["Select 2023-2024 observations<br/>n = 807 records"]
+    B --> C["Exclude records missing Medicare facility ID<br/>n excluded = 3"]
+    C --> D["ONC records available for linkage<br/>n = 804 records / 804 unique hospitals"]
+    D --> E["Standardize facility IDs and code TEFCA / other network indicators"]
+
+    F["CMS Complications and Deaths - Hospital dataset"] --> G["Hybrid HWM rows with nonmissing scores<br/>n = 3,976"]
+    F --> H["Heart failure mortality rows with nonmissing scores<br/>n = 3102"]
+    F --> I["Pneumonia mortality rows with nonmissing scores<br/>n = 3642"]
+
+    E --> J["Inner join ONC and CMS records by facility ID"]
+    G --> J
+    H --> J
+    I --> J
+
+    J --> K["Primary Hybrid HWM analytic sample<br/>n = 691 hospitals"]
+    J --> L["Secondary heart failure analytic sample<br/>n = 524 hospitals"]
+    J --> M["Secondary pneumonia analytic sample<br/>n = 630 hospitals"]
+
+    K --> N["Fit adjusted hospital-level OLS model"]
+    L --> O["Fit adjusted secondary OLS model"]
+    M --> O
+
+    classDef onc fill:#eef5ff,stroke:#4a6fa5,color:#111;
+    classDef cms fill:#fff4e6,stroke:#a56b2a,color:#111;
+    classDef final fill:#edf8ed,stroke:#4f7f4f,color:#111;
+
+    class A,B,C,D,E onc;
+    class F,G,H,I cms;
+    class K,L,M,N,O final;

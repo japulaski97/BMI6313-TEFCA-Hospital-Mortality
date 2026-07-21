@@ -6,6 +6,9 @@ library(here)
 library(broom)
 library(gt)
 
+source(here("scripts", "10_model_diagnostics_helpers.R"))
+source(here("scripts", "11_singleton_state_sensitivity.R"))
+
 # Load primary analytic dataset
 primary_hybrid_hwm <- read_csv(
   here("data_processed", "primary_hybrid_hwm.csv"),
@@ -209,3 +212,43 @@ print(head(leverage_diagnostics, 10))
 
 cat("\nStates with smallest sample sizes:\n")
 print(head(state_counts, 10))
+
+# Model diagnostics and HC1 robust-standard-error sensitivity check
+primary_key_terms <- c(
+  "tefca_statusCurrent TEFCA",
+  "tefca_statusNeither current nor planned",
+  "national_network",
+  "vendor_network",
+  "hio",
+  "log_denominator"
+)
+
+primary_diagnostics <- run_lm_diagnostics(
+  model = primary_model,
+  model_data = primary_model_data,
+  model_id = "primary_hybrid_hwm",
+  key_terms = primary_key_terms
+)
+
+# Save exact R and package-version information used for the analysis
+writeLines(
+  capture.output(sessionInfo()),
+  here("outputs", "diagnostics", "session_info.txt")
+)
+
+cat("\nPrimary diagnostic summary:\n")
+print(primary_diagnostics$summary)
+
+cat("\nPrimary key coefficients: conventional vs HC1 robust SEs:\n")
+print(primary_diagnostics$key_conventional_vs_hc1)
+
+cat("\nPrimary model collinearity diagnostics:\n")
+print(primary_diagnostics$vif)
+
+# Sensitivity analysis excluding states represented by one hospital
+primary_singleton_sensitivity <-
+  run_singleton_state_sensitivity(
+    original_model = primary_model,
+    model_data = primary_model_data,
+    model_id = "primary_hybrid_hwm"
+  )

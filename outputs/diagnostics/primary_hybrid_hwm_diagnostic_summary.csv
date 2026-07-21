@@ -1,0 +1,2 @@
+model_name,n,model_rank,residual_df,breusch_pagan_statistic,breusch_pagan_df,breusch_pagan_p_value,cooks_distance_cutoff,n_cooks_above_cutoff,max_cooks_distance,leverage_cutoff,n_leverage_above_cutoff,n_hat_near_one,max_hat_value,n_abs_studentized_residual_above_3,max_abs_studentized_residual
+primary_hybrid_hwm,691,56,635,83.77136629321495,55,0.007468231125645561,0.005788712011577424,44,0.04759371374674292,0.16208393632416787,49,1,1,4,3.6109964742670217

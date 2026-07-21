@@ -1,0 +1,2 @@
+model_name,original_n,sensitivity_n,n_singleton_states_excluded,max_hat_after_exclusion
+secondary_heart_failure,524,521,3,0.5101101270109885

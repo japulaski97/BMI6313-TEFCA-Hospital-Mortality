@@ -1,0 +1,2 @@
+model,term,estimate,std.error,conf.low,conf.high,p.value
+Exploratory any measured HIE model,any_measured_hie,-0.06414805144109043,0.06385781119193248,-0.18954457404707378,0.06124847116489293,0.31549618212548325

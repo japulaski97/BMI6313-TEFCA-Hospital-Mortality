@@ -1,0 +1,2 @@
+model_name,original_n,sensitivity_n,n_singleton_states_excluded,max_hat_after_exclusion
+secondary_pneumonia,630,629,1,0.5082521841074255

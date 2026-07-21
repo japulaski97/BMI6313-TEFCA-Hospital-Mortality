@@ -6,6 +6,9 @@ library(here)
 library(broom)
 library(gt)
 
+source(here("scripts", "10_model_diagnostics_helpers.R"))
+source(here("scripts", "11_singleton_state_sensitivity.R"))
+
 secondary_mortality <- read_csv(
   here("data_processed", "secondary_mortality.csv"),
   show_col_types = FALSE
@@ -138,6 +141,9 @@ secondary_model_fit <- secondary_results_all %>%
     `Adjusted R-squared` = adjusted_r_squared
   )
 
+dir.create(here("outputs", "models"), recursive = TRUE, showWarnings = FALSE)
+dir.create(here("outputs", "tables"), recursive = TRUE, showWarnings = FALSE)
+
 write_csv(
   tableA3_secondary,
   here("outputs", "tables", "tableA3_secondary_mortality_models.csv")
@@ -171,3 +177,61 @@ print(tableA3_secondary, n = Inf)
 
 cat("\nSecondary model fit:\n")
 print(secondary_model_fit)
+
+# Model diagnostics and HC1 robust-standard-error sensitivity checks
+secondary_key_terms <- c(
+  "tefca_statusCurrent TEFCA",
+  "tefca_statusNeither current nor planned",
+  "national_network",
+  "vendor_network",
+  "hio",
+  "log_denominator"
+)
+
+hf_diagnostics <- run_lm_diagnostics(
+  model = hf$model,
+  model_data = hf$data,
+  model_id = "secondary_heart_failure",
+  key_terms = secondary_key_terms
+)
+
+pn_diagnostics <- run_lm_diagnostics(
+  model = pn$model,
+  model_data = pn$data,
+  model_id = "secondary_pneumonia",
+  key_terms = secondary_key_terms
+)
+
+secondary_diagnostic_summary <- bind_rows(
+  hf_diagnostics$summary,
+  pn_diagnostics$summary
+)
+
+write_csv(
+  secondary_diagnostic_summary,
+  here("outputs", "diagnostics", "secondary_models_diagnostic_summary.csv")
+)
+
+cat("\nSecondary diagnostic summaries:\n")
+print(secondary_diagnostic_summary)
+
+cat("\nHeart failure key coefficients: conventional vs HC1 robust SEs:\n")
+print(hf_diagnostics$key_conventional_vs_hc1)
+
+cat("\nPneumonia key coefficients: conventional vs HC1 robust SEs:\n")
+print(pn_diagnostics$key_conventional_vs_hc1)
+
+# Sensitivity analyses excluding states represented by one hospital
+hf_singleton_sensitivity <-
+  run_singleton_state_sensitivity(
+    original_model = hf$model,
+    model_data = hf$data,
+    model_id = "secondary_heart_failure"
+  )
+
+pn_singleton_sensitivity <-
+  run_singleton_state_sensitivity(
+    original_model = pn$model,
+    model_data = pn$data,
+    model_id = "secondary_pneumonia"
+  )

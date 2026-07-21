@@ -1,0 +1,2 @@
+model_name,n,model_rank,residual_df,breusch_pagan_statistic,breusch_pagan_df,breusch_pagan_p_value,cooks_distance_cutoff,n_cooks_above_cutoff,max_cooks_distance,leverage_cutoff,n_leverage_above_cutoff,n_hat_near_one,max_hat_value,n_abs_studentized_residual_above_3,max_abs_studentized_residual
+secondary_pneumonia,630,56,574,74.2953696313808,55,0.04252854567096199,0.006349206349206349,36,0.08440329425190483,0.17777777777777778,45,1,1,9,3.8504143530905406

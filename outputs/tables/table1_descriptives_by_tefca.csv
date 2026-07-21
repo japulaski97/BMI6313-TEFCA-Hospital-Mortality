@@ -1,0 +1,12 @@
+Characteristic,Planned TEFCA,Current TEFCA,Neither current nor planned
+"Hospitals, n",289,112,290
+"ONC year 2023, n (%)",157 (54.3%),46 (41.1%),157 (54.1%)
+"ONC year 2024, n (%)",132 (45.7%),66 (58.9%),133 (45.9%)
+"States represented, n",47,32,44
+"National network participation, n (%)",223 (77.2%),85 (75.9%),118 (40.7%)
+"EHR vendor-network participation, n (%)",199 (68.9%),71 (63.4%),67 (23.1%)
+"State/regional/local HIO participation, n (%)",262 (90.7%),104 (92.9%),195 (67.2%)
+"CMS denominator, median [IQR]","637 [171, 1392]","608 [110, 1591]","142 [65, 494]"
+"CMS denominator, mean (SD)",984.0 (1098.7),894.6 (969.0),461.3 (772.4)
+"Hybrid HWM score, median [IQR]","4.00 [3.80, 4.30]","4.15 [3.90, 4.43]","4.40 [4.10, 4.60]"
+"Hybrid HWM score, mean (SD)",4.06 (0.51),4.19 (0.48),4.40 (0.46)

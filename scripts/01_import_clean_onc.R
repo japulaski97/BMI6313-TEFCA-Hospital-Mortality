@@ -52,6 +52,11 @@ onc_clean <- onc_raw %>%
     tefca_status
   )
 
+# Confirm that each hospital appears only once in the selected ONC subset
+stopifnot(
+  nrow(onc_clean) == n_distinct(onc_clean$facility_id)
+)
+
 write_csv(onc_clean, here("data_processed", "onc_clean.csv"))
 
 cat("ONC rows:", nrow(onc_clean), "\n")
