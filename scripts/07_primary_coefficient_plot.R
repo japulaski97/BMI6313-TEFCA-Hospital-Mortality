@@ -15,7 +15,7 @@ display_levels <- rev(c(
   "Current vs planned",
   "Neither vs planned",
   "National network",
-  "EHR vendor-network",
+  "EHR vendor network",
   "State/regional/local HIO",
   "Log CMS denominator"
 ))
@@ -42,7 +42,7 @@ coef_plot_data <- broom::tidy(
       "tefca_statusCurrent TEFCA" = "Current vs planned",
       "tefca_statusNeither current nor planned" = "Neither vs planned",
       "national_network" = "National network",
-      "vendor_network" = "EHR vendor-network",
+      "vendor_network" = "EHR vendor network",
       "hio" = "State/regional/local HIO",
       "log_denominator" = "Log CMS denominator"
     ),
