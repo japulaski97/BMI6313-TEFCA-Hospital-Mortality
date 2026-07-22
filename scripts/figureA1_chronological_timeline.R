@@ -1,10 +1,11 @@
-# figureA1_chronological_timeline_clean_v4.R
-# Purpose: Create a clean chronological timeline with short leader lines
-# that stop before the milestone labels.
+# figureA1_chronological_timeline.R
+# Purpose: Create a chronological timeline showing TEFCA milestones
+# alongside the ONC survey years and CMS mortality measurement periods.
 
 library(tidyverse)
 library(here)
 
+# Create output directories if they do not already exist.
 dir.create(
   here("outputs", "figures"),
   recursive = TRUE,
@@ -17,48 +18,61 @@ dir.create(
   showWarnings = FALSE
 )
 
-# Survey and measurement windows
+# Survey and CMS mortality measurement periods.
+# PSI complications were removed because they were not analyzed in this study.
 windows <- tribble(
   ~row, ~label, ~start, ~end,
-  4, "Condition-specific mortality",
+  
+  3, "Condition-specific mortality",
   as.Date("2021-07-01"), as.Date("2024-06-30"),
-  3, "PSI complications",
-  as.Date("2022-07-01"), as.Date("2024-06-30"),
+  
   2, "ONC survey years",
   as.Date("2023-01-01"), as.Date("2024-12-31"),
+  
   1, "Hybrid HWM",
   as.Date("2023-07-01"), as.Date("2024-06-30")
 )
 
-# Each milestone has:
-#   - the true event date;
-#   - a short leader-line endpoint;
-#   - a nearby text position beyond the leader endpoint.
+# Point-in-time TEFCA milestones.
+#
+# Month-level events are plotted on the first day of the stated month.
+# Each milestone includes:
+#   date          = plotted milestone date
+#   line_end_date = end of the short leader line
+#   line_end_y    = vertical end of the leader line
+#   text_date     = horizontal position of the annotation
+#   text_y        = vertical position of the annotation
+#   hjust         = horizontal text alignment
 milestones <- tribble(
-  ~date, ~label, ~line_end_date, ~line_end_y, ~text_date, ~text_y, ~hjust,
+  ~date, ~label, ~line_end_date, ~line_end_y,
+  ~text_date, ~text_y, ~hjust,
+  
   as.Date("2016-12-01"),
   "21st Century Cures Act\n(December 2016)",
-  as.Date("2017-01-10"), 5.24,
-  as.Date("2017-01-22"), 5.32, 0,
-
+  as.Date("2017-01-10"), 4.20,
+  as.Date("2017-01-22"), 4.28, 0,
+  
   as.Date("2022-01-01"),
   "TEFCA Version 1 published\n(January 2022)",
-  as.Date("2021-11-20"), 5.24,
-  as.Date("2021-11-05"), 5.32, 1,
-
+  as.Date("2021-11-20"), 4.20,
+  as.Date("2021-11-05"), 4.28, 1,
+  
   as.Date("2023-12-01"),
   "TEFCA go-live and initial\nQHIN designations\n(December 2023)",
-  as.Date("2023-09-25"), 5.34,
-  as.Date("2023-09-10"), 5.43, 1,
-
+  as.Date("2023-10-05"), 4.28,
+  as.Date("2023-09-20"), 4.38, 1,
+  
+  # Place this annotation below and to the left of its point so that it
+  # remains fully inside the exported figure.
   as.Date("2024-02-01"),
   "Additional QHIN designations\n(February 2024)",
-  as.Date("2024-04-15"), 4.76,
-  as.Date("2024-04-28"), 4.67, 0
+  as.Date("2023-12-20"), 3.78,
+  as.Date("2023-12-05"), 3.68, 1
 )
 
 figureA1 <- ggplot() +
-  # Measurement/survey spans
+  
+  # ONC survey and CMS mortality periods
   geom_segment(
     data = windows,
     aes(
@@ -67,44 +81,47 @@ figureA1 <- ggplot() +
       y = row,
       yend = row
     ),
-    linewidth = 3.8,
+    linewidth = 4,
     lineend = "butt"
   ) +
+  
   geom_point(
     data = windows,
     aes(x = start, y = row),
-    size = 1.7
+    size = 1.8
   ) +
+  
   geom_point(
     data = windows,
     aes(x = end, y = row),
-    size = 1.7
+    size = 1.8
   ) +
-
-  # Milestone lane and points
+  
+  # TEFCA milestone lane
   geom_hline(
-    yintercept = 5,
+    yintercept = 4,
     linewidth = 0.45
   ) +
+  
   geom_point(
     data = milestones,
-    aes(x = date, y = 5),
+    aes(x = date, y = 4),
     size = 2.5
   ) +
-
-  # Short leader lines that terminate before the text
+  
+  # Short leader lines ending before the text
   geom_segment(
     data = milestones,
     aes(
       x = date,
       xend = line_end_date,
-      y = 5,
+      y = 4,
       yend = line_end_y
     ),
     linewidth = 0.35
   ) +
-
-  # Labels positioned just beyond each leader-line endpoint
+  
+  # Milestone labels
   geom_text(
     data = milestones,
     aes(
@@ -116,60 +133,72 @@ figureA1 <- ggplot() +
     size = 2.9,
     lineheight = 0.93
   ) +
-
+  
   scale_x_date(
     limits = as.Date(c("2016-06-01", "2025-02-01")),
     breaks = as.Date(paste0(2017:2025, "-01-01")),
     date_labels = "%Y",
     expand = expansion(mult = c(0.01, 0.01))
   ) +
+  
   scale_y_continuous(
-    breaks = 1:5,
+    breaks = 1:4,
     labels = c(
       "Hybrid HWM",
       "ONC survey years",
-      "PSI complications",
       "Condition-specific mortality",
       "TEFCA milestones"
     ),
-    limits = c(0.55, 5.72)
+    limits = c(0.55, 4.72)
   ) +
+  
   labs(
     x = "Calendar year",
     y = NULL
   ) +
+  
   coord_cartesian(clip = "off") +
+  
   theme_minimal(base_size = 10.5) +
+  
   theme(
     panel.grid.major.y = element_blank(),
     panel.grid.minor = element_blank(),
     axis.text.y = element_text(hjust = 1),
-    plot.margin = margin(18, 22, 10, 12)
+    plot.margin = margin(
+      t = 20,
+      r = 35,
+      b = 12,
+      l = 14
+    )
   )
 
+# Save PNG for insertion into the manuscript.
 ggsave(
-  here(
+  filename = here(
     "outputs",
     "figures",
     "figureA1_chronological_timeline.png"
   ),
-  figureA1,
+  plot = figureA1,
   width = 10.8,
-  height = 5.8,
+  height = 5.2,
   dpi = 300
 )
 
+# Save PDF as the vector-quality version.
 ggsave(
-  here(
+  filename = here(
     "outputs",
     "figures",
     "figureA1_chronological_timeline.pdf"
   ),
-  figureA1,
+  plot = figureA1,
   width = 10.8,
-  height = 5.8
+  height = 5.2
 )
 
+# Preserve the figure's underlying source data.
 write_csv(
   windows,
   here(
@@ -189,5 +218,5 @@ write_csv(
 )
 
 cat(
-  "\nSaved the revised Figure A1 with short leader lines to outputs/figures.\n"
+  "\nSaved the revised Figure A1 to outputs/figures.\n"
 )
