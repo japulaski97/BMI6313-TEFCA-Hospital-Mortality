@@ -8,14 +8,13 @@ Among 691 U.S. non-federal acute care hospitals, the analyses did not provide ro
 
 These results describe between-hospital associations during early TEFCA implementation and should not be interpreted as causal effects.
 
-## Poster materials
+## Final paper and poster
 
-- **Scientific poster:** in development
-- **Unpublished class paper:** to be added
+- **[Final research paper](paper/BMI6313_TEFCA_Final_Paper_Jordan_Pulaski.pdf)**
+- **[Scientific poster (PDF)](poster/BMI6313_TEFCA_Poster_Jordan_Pulaski.pdf)**
+- **[Scientific poster (PowerPoint)](poster/BMI6313_TEFCA_Poster_Jordan_Pulaski.pptx)**
 - **Analysis code:** available in [`scripts/`](scripts/)
 - **Tables and figures:** available in [`outputs/`](outputs/)
-
-The final poster PDF and paper will be linked here before this repository is used as the poster's QR-code destination.
 
 ## Study overview
 
