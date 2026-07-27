@@ -1,0 +1,28 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "fontFamily": "Arial",
+    "fontSize": "32px",
+    "primaryColor": "#DCEFF2",
+    "primaryTextColor": "#000000",
+    "primaryBorderColor": "#0E5F70",
+    "lineColor": "#0E5F70"
+  },
+  "flowchart": {
+    "htmlLabels": true,
+    "nodeSpacing": 25,
+    "rankSpacing": 35,
+    "padding": 20,
+    "useMaxWidth": false
+  }
+}}%%
+
+flowchart LR
+    A["ONC survey<br/>TEFCA + HIE indicators"] --> C["Link hospital IDs<br/>CCN to CMS Facility ID"]
+    B["CMS mortality data<br/>Select + deduplicate"] --> C
+    C --> D["Primary cohort<br/>691 hospitals"]
+    D --> E["Adjusted OLS<br/>Primary + secondary outcomes"]
+
+    classDef poster fill:#DCEFF2,stroke:#0E5F70,stroke-width:3px,color:#000000,font-size:32px;
+    class A,B,C,D,E poster;
+    linkStyle default stroke:#0E5F70,stroke-width:3px;
